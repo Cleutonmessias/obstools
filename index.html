@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ObsTools - Ferramentas para Obstetrícia</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>ObsTools</h1>
+        <nav>
+            <ul>
+                <li><a href="#calculadoras">Calculadoras</a></li>
+                <li><a href="#evolucao">Evolução</a></li>
+                <li><a href="#protocolos">Protocolos</a></li>
+                <li><a href="#prescricao">Prescrição</a></li>
+                <li><a href="#receituario">Receituário</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="calculadoras">
+            <h2>Calculadoras Obstétricas</h2>
+            <div class="calculadora-container">
+                <!-- Calculadora de Idade Gestacional -->
+                <div class="calculadora">
+                    <h3>Idade Gestacional</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="dum">DUM:</label>
+                            <input type="date" id="dum" name="dum">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataUsg">Data do USG:</label>
+                            <input type="date" id="dataUsg" name="dataUsg">
+                        </div>
+                        <div class="form-group">
+                            <label for="igUsg">IG no USG:</label>
+                            <input type="number" id="igUsgSemanas" placeholder="Semanas" min="0" max="42">
+                            <input type="number" id="igUsgDias" placeholder="Dias" min="0" max="6">
+                        </div>
+                        <button onclick="calculadoras.calcularIdadeGestacional()">Calcular IG</button>
+                        <div id="resultadoIG" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de IMC Gestacional -->
+                <div class="calculadora">
+                    <h3>IMC Gestacional</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="peso">Peso (kg):</label>
+                            <input type="number" id="peso" step="0.1" min="30" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="altura">Altura (m):</label>
+                            <input type="number" id="altura" step="0.01" min="1" max="2.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="semanaGestacional">Semana Gestacional:</label>
+                            <input type="number" id="semanaGestacional" min="1" max="42">
+                        </div>
+                        <button onclick="calculadoras.calcularIMC()">Calcular IMC</button>
+                        <div id="resultadoIMC" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Peso Fetal -->
+                <div class="calculadora">
+                    <h3>Estimativa de Peso Fetal</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="dbp">DBP (mm):</label>
+                            <input type="number" id="dbp" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="cc">CC (mm):</label>
+                            <input type="number" id="cc" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="ca">CA (mm):</label>
+                            <input type="number" id="ca" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="cf">CF (mm):</label>
+                            <input type="number" id="cf" step="0.1">
+                        </div>
+                        <button onclick="calculadoras.estimarPesoFetal()">Calcular Peso Fetal</button>
+                        <div id="resultadoPesoFetal" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Percentil Fetal -->
+                <div class="calculadora">
+                    <h3>Percentil Fetal</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="pesoFeto">Peso do Feto (g):</label>
+                            <input type="number" id="pesoFeto" step="1" min="100" max="6000">
+                        </div>
+                        <div class="form-group">
+                            <label for="igPercentil">Idade Gestacional:</label>
+                            <input type="number" id="igPercentilSemanas" placeholder="Semanas" min="20" max="42" step="1">
+                            <input type="number" id="igPercentilDias" placeholder="Dias" min="0" max="6" step="1">
+                        </div>
+                        <button onclick="calculadoras.calcularPercentilFetal()">Calcular Percentil</button>
+                        <div id="resultadoPercentil" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de ILA -->
+                <div class="calculadora">
+                    <h3>Índice de Líquido Amniótico (ILA)</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="q1">Q1 (cm):</label>
+                            <input type="number" id="q1" step="0.1" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="q2">Q2 (cm):</label>
+                            <input type="number" id="q2" step="0.1" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="q3">Q3 (cm):</label>
+                            <input type="number" id="q3" step="0.1" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="q4">Q4 (cm):</label>
+                            <input type="number" id="q4" step="0.1" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="igIla">Idade Gestacional:</label>
+                            <input type="number" id="igIla" min="20" max="42" step="1" placeholder="Semanas">
+                        </div>
+                        <button onclick="calculadoras.calcularILA()">Calcular ILA</button>
+                        <div id="resultadoILA" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Bishop Score -->
+                <div class="calculadora">
+                    <h3>Bishop Score</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="dilatacao">Dilatação:</label>
+                            <select id="dilatacao" class="form-select">
+                                <option value="0">Fechado</option>
+                                <option value="1">1-2 cm</option>
+                                <option value="2">3-4 cm</option>
+                                <option value="3">≥5 cm</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="apagamento">Apagamento:</label>
+                            <select id="apagamento" class="form-select">
+                                <option value="0">0-30%</option>
+                                <option value="1">40-50%</option>
+                                <option value="2">60-70%</option>
+                                <option value="3">≥80%</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="consistencia">Consistência:</label>
+                            <select id="consistencia" class="form-select">
+                                <option value="0">Firme</option>
+                                <option value="1">Média</option>
+                                <option value="2">Amolecida</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="posicao">Posição:</label>
+                            <select id="posicao" class="form-select">
+                                <option value="0">Posterior</option>
+                                <option value="1">Centralizado</option>
+                                <option value="2">Anterior</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="altura">Altura da Apresentação:</label>
+                            <select id="altura" class="form-select">
+                                <option value="0">-3</option>
+                                <option value="1">-2</option>
+                                <option value="2">-1/0</option>
+                                <option value="3">+1/+2</option>
+                            </select>
+                        </div>
+                        <button onclick="calculadoras.calcularBishop()">Calcular Bishop Score</button>
+                        <div id="resultadoBishop" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de DPP -->
+                <div class="calculadora">
+                    <h3>Data Provável do Parto (DPP)</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="dumDpp">DUM:</label>
+                            <input type="date" id="dumDpp">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataUsgDpp">Data do USG (opcional):</label>
+                            <input type="date" id="dataUsgDpp">
+                        </div>
+                        <div class="form-group">
+                            <label for="igUsgDpp">IG no USG:</label>
+                            <input type="number" id="igUsgDppSemanas" placeholder="Semanas" min="0" max="42">
+                            <input type="number" id="igUsgDppDias" placeholder="Dias" min="0" max="6">
+                        </div>
+                        <button onclick="calculadoras.calcularDPP()">Calcular DPP</button>
+                        <div id="resultadoDPP" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Doppler -->
+                <div class="calculadora">
+                    <h3>Doppler Obstétrico</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="velocidadeSistolica">Velocidade Sistólica (cm/s):</label>
+                            <input type="number" id="velocidadeSistolica" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="velocidadeDiastolica">Velocidade Diastólica (cm/s):</label>
+                            <input type="number" id="velocidadeDiastolica" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="velocidadeMedia">Velocidade Média (cm/s):</label>
+                            <input type="number" id="velocidadeMedia" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoVaso">Vaso:</label>
+                            <select id="tipoVaso" class="form-select">
+                                <option value="umbilical">Artéria Umbilical</option>
+                                <option value="cerebral">Artéria Cerebral Média</option>
+                                <option value="uterina">Artéria Uterina</option>
+                            </select>
+                        </div>
+                        <button onclick="calculadoras.calcularDoppler()">Calcular Índices</button>
+                        <div id="resultadoDoppler" class="resultado"></div>
+                    </div>
+                </div>
+
+                <!-- Calculadora de Ganho de Peso Gestacional -->
+                <div class="calculadora">
+                    <h3>Ganho de Peso Gestacional</h3>
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="pesoPreGestacional">Peso Pré-Gestacional (kg):</label>
+                            <input type="number" id="pesoPreGestacional" step="0.1" min="30" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="pesoAtual">Peso Atual (kg):</label>
+                            <input type="number" id="pesoAtual" step="0.1" min="30" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="alturaGanhoPeso">Altura (m):</label>
+                            <input type="number" id="alturaGanhoPeso" step="0.01" min="1" max="2.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="igGanhoPeso">Idade Gestacional (semanas):</label>
+                            <input type="number" id="igGanhoPeso" min="1" max="42">
+                        </div>
+                        <button onclick="calculadoras.calcularGanhoPeso()">Avaliar Ganho de Peso</button>
+                        <div id="resultadoGanhoPeso" class="resultado"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="evolucao">
+            <h2>Gerador de Evolução</h2>
+            <div class="evolucao-form">
+                <!-- 1. ID -->
+                <div class="form-section">
+                    <h3>Identificação</h3>
+                    <div class="form-group">
+                        <label for="nomePaciente">Nome da Paciente:</label>
+                        <input type="text" id="nomePaciente" placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="idadePaciente">Idade:</label>
+                        <input type="number" id="idadePaciente" min="12" max="60">
+                    </div>
+                    <div class="form-group">
+                        <label for="procedencia">Procedência:</label>
+                        <input type="text" id="procedencia">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="g">G:</label>
+                            <input type="number" id="g" min="1" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="p">P:</label>
+                            <input type="number" id="p" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="a">A:</label>
+                            <input type="number" id="a" min="0" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="partos">Tipos de Parto:</label>
+                            <input type="text" id="partos" placeholder="Ex: PC HÁ 11 ANOS POR PE">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dumEvolucao">DUM:</label>
+                        <input type="date" id="dumEvolucao" class="form-control">
+                        <div class="form-check">
+                            <input type="checkbox" id="dumIncerta" class="form-check-input">
+                            <label class="form-check-label" for="dumIncerta">DUM Incerta</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataResolucao">Data de Resolução:</label>
+                        <input type="date" id="dataResolucao" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataUsgEvolucao">Data USG:</label>
+                        <input type="date" id="dataUsgEvolucao" class="form-control">
+                        <div class="row">
+                            <div class="col">
+                                <label for="igUsgEvolucaoSemanas">IG USG (semanas):</label>
+                                <input type="number" id="igUsgEvolucaoSemanas" class="form-control" min="0" max="42">
+                            </div>
+                            <div class="col">
+                                <label for="igUsgEvolucaoDias">IG USG (dias):</label>
+                                <input type="number" id="igUsgEvolucaoDias" class="form-control" min="0" max="6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. HD -->
+                <div class="form-section">
+                    <h3>Diagnósticos</h3>
+                    <div class="form-group">
+                        <label for="diagnosticos">HD:</label>
+                        <textarea id="diagnosticos" rows="3" placeholder="1. Gestação atual&#10;2. Comorbidades&#10;3. Outras condições"></textarea>
+                    </div>
+                </div>
+
+                <!-- 3. Antibióticos -->
+                <div class="form-section">
+                    <h3>Antibióticos</h3>
+                    <div class="form-group">
+                        <label for="antibioticosUso">Em Uso:</label>
+                        <textarea id="antibioticosUso" rows="2" placeholder="Ex: CEFALOTINA SODICA D2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="antibioticosPrevios">Fez Uso:</label>
+                        <textarea id="antibioticosPrevios" rows="2" placeholder="Ex: FEZ USO DE AMPICILINA POR 7 DIAS"></textarea>
+                    </div>
+                </div>
+
+                <!-- 4. Medicações -->
+                <div class="form-section">
+                    <h3>Medicações</h3>
+                    <div class="form-group">
+                        <label for="medicacoes">Em Uso:</label>
+                        <textarea id="medicacoes" rows="3" placeholder="Liste as medicações em uso"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicacoesPrevias">Fez Uso:</label>
+                        <textarea id="medicacoesPrevias" rows="2" placeholder="Liste as medicações que fez uso"></textarea>
+                    </div>
+                </div>
+
+                <!-- 5. Alergias -->
+                <div class="form-section">
+                    <h3>Alergias</h3>
+                    <div class="form-group">
+                        <label for="alergias">Alergias:</label>
+                        <input type="text" id="alergias" placeholder="Se houver">
+                    </div>
+                </div>
+
+                <!-- 6. Admissão -->
+                <div class="form-section">
+                    <h3>Admissão Médica</h3>
+                    <div class="form-group">
+                        <label>Tipo de Admissão:</label>
+                        <select id="tipoAdmissao" class="form-select" onchange="geradores.alternarTipoAdmissao()">
+                            <option value="nova">Gerar Nova Admissão</option>
+                            <option value="existente">Copiar Admissão Existente</option>
+                        </select>
+                    </div>
+
+                    <!-- Formulário para Nova Admissão -->
+                    <div id="novaAdmissao">
+                        <div class="form-group">
+                            <label for="dataAdmissao">Data da Admissão:</label>
+                            <input type="date" id="dataAdmissao">
+                        </div>
+                        <div class="form-group">
+                            <label for="hda">História da Doença Atual (HDA):</label>
+                            <textarea id="hda" rows="4" placeholder="Descreva a história da doença atual"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="hpp">História Patológica Pregressa (HPP):</label>
+                            <textarea id="hpp" rows="2" placeholder="Descreva os antecedentes patológicos"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="medicacoesUso">Medicações em Uso:</label>
+                            <textarea id="medicacoesUso" rows="2" placeholder="Liste as medicações em uso"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pn">Pré-Natal:</label>
+                            <textarea id="pn" rows="2" placeholder="Informações sobre o pré-natal"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="usgObstetrico">USG Obstétrico:</label>
+                            <textarea id="usgObstetrico" rows="2" placeholder="Informações do último USG"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exameAdmissao">Exame Físico da Admissão:</label>
+                            <textarea id="exameAdmissao" rows="8" placeholder="Utilize os campos estruturados abaixo para gerar o exame físico"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Campo para Copiar Admissão Existente -->
+                    <div id="admissaoExistente" style="display: none;">
+                        <div class="form-group">
+                            <label for="admissaoCopiada">Cole aqui a admissão existente:</label>
+                            <textarea id="admissaoCopiada" rows="15" placeholder="Cole aqui o texto completo da admissão existente"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button onclick="geradores.gerarAdmissao()" class="btn-primary">Gerar Admissão</button>
+                        <button onclick="geradores.copiarAdmissao()" class="btn-secondary">Copiar Admissão</button>
+                    </div>
+                    <div id="admissaoGerada" class="resultado-evolucao"></div>
+                </div>
+
+                <!-- 7. Em Tempo -->
+                <div class="form-section">
+                    <h3>Em Tempo</h3>
+                    <div class="form-group">
+                        <label for="emTempo">Observações em Tempo:</label>
+                        <textarea id="emTempo" rows="4" placeholder="Ex: PACIENTE SUBMETIDA A CESARIANA DEVIDO A GUTPT + RCIU ESTÁGIO 1 + CESÁREA ANTERIOR"></textarea>
+                    </div>
+                </div>
+
+                <!-- 8. Evolução -->
+                <div class="form-section">
+                    <h3>Estado Geral</h3>
+                    <div class="form-group">
+                        <label for="consciencia">Consciência:</label>
+                        <select id="consciencia" class="form-select">
+                            <option value="LÚCIDA E ORIENTADA">LÚCIDA E ORIENTADA</option>
+                            <option value="SONOLENTA">SONOLENTA</option>
+                            <option value="CONFUSA">CONFUSA</option>
+                            <option value="AGITADA">AGITADA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="interacao">Interação:</label>
+                        <select id="interacao" class="form-select">
+                            <option value="boa">BOA</option>
+                            <option value="regular">REGULAR</option>
+                            <option value="ruim">RUIM</option>
+                            <option value="nao interage">NÃO INTERAGE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deambulacao">Deambulação:</label>
+                        <select id="deambulacao" class="form-select">
+                            <option value="sem auxilio">SEM AUXÍLIO</option>
+                            <option value="com auxilio">COM AUXÍLIO</option>
+                            <option value="restrita">RESTRITA AO LEITO</option>
+                            <option value="repouso">REPOUSO RELATIVO</option>
+                            <option value="absoluto">REPOUSO ABSOLUTO</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="respiracao">Respiração:</label>
+                        <select id="respiracao" class="form-select">
+                            <option value="normal">RESPIRAÇÃO ESPONTÂNEA EM AR AMBIENTE, SEM DESCONFORTO RESPIRATÓRIO</option>
+                            <option value="desconforto leve">COM LEVE DESCONFORTO RESPIRATÓRIO</option>
+                            <option value="desconforto moderado">COM MODERADO DESCONFORTO RESPIRATÓRIO</option>
+                            <option value="desconforto grave">COM GRAVE DESCONFORTO RESPIRATÓRIO</option>
+                            <option value="cateter">EM USO DE CATETER DE O2</option>
+                            <option value="mascara">EM USO DE MÁSCARA DE O2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dieta">Dieta:</label>
+                        <select id="dieta" class="form-select">
+                            <option value="oral boa">EM DIETA ORAL, COM BOA ACEITAÇÃO</option>
+                            <option value="oral parcial">EM DIETA ORAL, COM ACEITAÇÃO PARCIAL</option>
+                            <option value="zero">EM DIETA ZERO</option>
+                            <option value="nao aceita">NÃO ACEITA DIETA</option>
+                            <option value="nauseas">COM NÁUSEAS</option>
+                            <option value="vomitos">COM VÔMITOS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eliminacoes">Eliminações:</label>
+                        <select id="eliminacoes" class="form-select">
+                            <option value="normais">DIURESE E EVACUAÇÕES PRESENTES E FISIOLÓGICAS</option>
+                            <option value="alteradas">ELIMINAÇÕES FISIOLÓGICAS ALTERADAS</option>
+                            <option value="ausentes">ELIMINAÇÕES FISIOLÓGICAS AUSENTES</option>
+                            <option value="so diurese">APENAS COM DIURESE PRESENTE</option>
+                            <option value="so evacuacao">APENAS COM EVACUAÇÃO PRESENTE</option>
+                            <option value="constipacao">REFERE CONSTIPAÇÃO</option>
+                            <option value="diarreia">REFERE DIARREIA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sangramentos">Sangramentos/LA:</label>
+                        <select id="sangramentos" class="form-select">
+                            <option value="sem">SEM NOVOS SANGRAMENTOS OU PERDA DE LA</option>
+                            <option value="sangramento">COM SANGRAMENTO VAGINAL</option>
+                            <option value="la">COM PERDA DE LA</option>
+                            <option value="ambos">COM SANGRAMENTO VAGINAL E PERDA DE LA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="queixas">Queixas:</label>
+                        <textarea id="queixas" rows="2" placeholder="Descreva as queixas da paciente"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="semQueixas" class="form-check-input">
+                        <label class="form-check-label" for="semQueixas">NO MOMENTO SEM QUEIXAS</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="refere">Refere:</label>
+                        <textarea id="refere" rows="2" placeholder="Ex: CEFALEIA INTENSA HÁ 2 DIAS"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="queixaSe">Queixa-se:</label>
+                        <textarea id="queixaSe" rows="2" placeholder="Ex: DOR EM BAIXO VENTRE"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="nega">Nega:</label>
+                        <textarea id="nega" rows="2" placeholder="Ex: PERDA DE LA, SANGRAMENTO VAGINAL"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="semDemaisQueixas" class="form-check-input">
+                        <label class="form-check-label" for="semDemaisQueixas">SEM DEMAIS QUEIXAS</label>
+                    </div>
+                </div>
+
+                <!-- 9. Exame Físico -->
+                <div class="form-section">
+                    <h3>Exame Físico</h3>
+                    
+                    <!-- ECT -->
+                    <div class="form-group">
+                        <label>ECT:</label>
+                        <select id="ectEg" class="form-select">
+                            <option value="BOM">BOM</option>
+                            <option value="REGULAR">REGULAR</option>
+                            <option value="RUIM">RUIM</option>
+                        </select>
+                        <div class="form-check">
+                            <input type="checkbox" id="ectCorada" class="form-check-input" checked>
+                            <label class="form-check-label">CORADA</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="ectHidratada" class="form-check-input" checked>
+                            <label class="form-check-label">HIDRATADA</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="ectAcianótica" class="form-check-input" checked>
+                            <label class="form-check-label">ACIANÓTICA</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="ectAnictérica" class="form-check-input" checked>
+                            <label class="form-check-label">ANICTÉRICA</label>
+                        </div>
+                        <input type="text" id="ectOutros" placeholder="Outros achados">
+                    </div>
+
+                    <!-- MAMAS -->
+                    <div class="form-group">
+                        <label>MAMAS:</label>
+                        <select id="mamasStatus" class="form-select">
+                            <option value="SIMÉTRICAS">SIMÉTRICAS</option>
+                            <option value="ASSIMÉTRICAS">ASSIMÉTRICAS</option>
+                        </select>
+                        <div class="form-check">
+                            <input type="checkbox" id="mamasFlogisticos" class="form-check-input">
+                            <label class="form-check-label">COM SINAIS FLOGÍSTICOS</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="mamasIncomodos" class="form-check-input">
+                            <label class="form-check-label">COM INCÔMODOS</label>
+                        </div>
+                        <input type="text" id="mamasOutros" placeholder="Outros achados">
+                    </div>
+
+                    <!-- ABDOME -->
+                    <div class="form-group">
+                        <label>ABD:</label>
+                        <select id="abdTipo" class="form-select">
+                            <option value="GLOBOSO">GLOBOSO</option>
+                            <option value="GRAVÍDICO">GRAVÍDICO</option>
+                            <option value="FLÁCIDO">FLÁCIDO</option>
+                            <option value="PLANO">PLANO</option>
+                        </select>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdNormotimpanico" class="form-check-input" checked>
+                            <label class="form-check-label">NORMOTIMPÂNICO</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdRha" class="form-check-input" checked>
+                            <label class="form-check-label">RHA +</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdIndolor" class="form-check-input" checked>
+                            <label class="form-check-label">INDOLOR A PALPAÇÃO</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdDoloroso" class="form-check-input">
+                            <label class="form-check-label">DOLOROSO A PALPAÇÃO</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdFlogisticos" class="form-check-input">
+                            <label class="form-check-label">COM SINAIS FLOGÍSTICOS</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdIrritacao" class="form-check-input">
+                            <label class="form-check-label">COM SINAIS DE IRRITAÇÃO PERITONEAL</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="abdVisceras" class="form-check-input" checked>
+                            <label class="form-check-label">SEM VISCEROMEGALIAS PALPÁVEIS</label>
+                        </div>
+                        <input type="text" id="afu" placeholder="AFU (ex: 20cm)">
+                            <select id="foStatus" class="form-select">
+                            <option value="">Selecione FO</option>
+                                <option value="LIMPA E SECA">LIMPA E SECA</option>
+                                <option value="COM SECREÇÃO">COM SECREÇÃO</option>
+                            </select>
+                        <div class="form-check">
+                            <input type="checkbox" id="foFlogisticos" class="form-check-input">
+                            <label class="form-check-label">FO COM SINAIS FLOGÍSTICOS</label>
+                        </div>
+                        <input type="text" id="abdOutros" placeholder="Outros achados">
+                    </div>
+
+                    <!-- GINECOLÓGICO -->
+                    <div class="form-group">
+                        <label>GIN:</label>
+                        <select id="ginStatus" class="form-select">
+                            <option value="SEM SANGRAMENTO">SEM SANGRAMENTO</option>
+                            <option value="COM SANGRAMENTO">COM SANGRAMENTO</option>
+                            <option value="COM PERDA DE LA">COM PERDA DE LA</option>
+                        </select>
+                        <div class="form-check">
+                            <input type="checkbox" id="ginFisiologico" class="form-check-input" checked>
+                            <label class="form-check-label">FISIOLÓGICO</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="ginFlogisticos" class="form-check-input">
+                            <label class="form-check-label">COM SINAIS FLOGÍSTICOS</label>
+                        </div>
+                        <input type="text" id="ginOutros" placeholder="Outros achados">
+                    </div>
+
+                    <!-- EXTREMIDADES -->
+                    <div class="form-group">
+                        <label>EXT:</label>
+                        <select id="extStatus" class="form-select">
+                            <option value="SEM EDEMA">SEM EDEMA</option>
+                            <option value="COM EDEMA">COM EDEMA</option>
+                        </select>
+                        <div class="form-check">
+                            <input type="checkbox" id="extMmii" class="form-check-input" checked>
+                            <label class="form-check-label">MMII</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="extEdemaLeve" class="form-check-input">
+                            <label class="form-check-label">EDEMA LEVE</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="extEdema" class="form-check-input">
+                            <label class="form-check-label">EDEMA</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="extTvp" class="form-check-input">
+                            <label class="form-check-label">SINAIS DE TVP</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="extDor" class="form-check-input">
+                            <label class="form-check-label">DOR</label>
+                        </div>
+                        <input type="text" id="extOutros" placeholder="Outros achados">
+                    </div>
+                </div>
+
+                <!-- Parâmetros 24h -->
+                <div class="form-section">
+                    <h3>Parâmetros 24h</h3>
+                    <div id="parametros24h">
+                        <div class="parametro-grupo" data-index="0">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Data:</label>
+                                    <input type="date" class="param-data">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hora:</label>
+                                    <input type="time" class="param-hora">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>PA:</label>
+                                    <input type="text" class="param-pa" placeholder="Ex: 120/80">
+                                </div>
+                                <div class="form-group">
+                                    <label>T:</label>
+                                    <input type="text" class="param-temp" placeholder="Ex: 36.5">
+                                </div>
+                                <div class="form-group">
+                                    <label>BCF:</label>
+                                    <input type="text" class="param-bcf" placeholder="Ex: 140">
+                                </div>
+                                <div class="form-group">
+                                    <label>FC:</label>
+                                    <input type="text" class="param-fc" placeholder="Ex: 80">
+                                </div>
+                                <div class="form-group">
+                                    <label>FR:</label>
+                                    <input type="text" class="param-fr" placeholder="Ex: 16">
+                                </div>
+                                <div class="form-group">
+                                    <label>Sat:</label>
+                                    <input type="text" class="param-sat" placeholder="Ex: 98">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Observações:</label>
+                                <textarea class="param-obs" rows="2" placeholder="Ex: Despresado 1600ml de diurese de aspecto normal"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="geradores.adicionarParametro()" class="btn-secondary">+ Adicionar Horário</button>
+                    <button type="button" onclick="geradores.removerUltimoParametro()" class="btn-secondary">- Remover Último</button>
+                </div>
+
+                <!-- Exames Complementares -->
+                <div class="form-section">
+                    <h3>Exames Complementares</h3>
+                    
+                    <!-- Exames Laboratoriais -->
+                    <div id="examesLaboratoriais">
+                        <div class="exame-lab-grupo" data-index="0">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Data:</label>
+                                    <input type="date" class="lab-data">
+                                </div>
+                            </div>
+                            
+                            <!-- Hemograma -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>HB:</label>
+                                    <input type="text" class="lab-hb" placeholder="Ex: 12.5">
+                                </div>
+                                <div class="form-group">
+                                    <label>HT:</label>
+                                    <input type="text" class="lab-ht" placeholder="Ex: 37.1">
+                                </div>
+                                <div class="form-group">
+                                    <label>LEUCO:</label>
+                                    <input type="text" class="lab-leuco" placeholder="Ex: 8.830">
+                                </div>
+                                <div class="form-group">
+                                    <label>SEGMENTADOS %:</label>
+                                    <input type="text" class="lab-seg-perc" placeholder="Ex: 73">
+                                </div>
+                                <div class="form-group">
+                                    <label>SEGMENTADOS ABS:</label>
+                                    <input type="text" class="lab-seg-abs" placeholder="Ex: 10278">
+                                </div>
+                                <div class="form-group">
+                                    <label>PLAQ:</label>
+                                    <input type="text" class="lab-plaq" placeholder="Ex: 276">
+                                </div>
+                            </div>
+
+                            <!-- Bioquímica -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>PCR:</label>
+                                    <input type="text" class="lab-pcr" placeholder="Ex: 13.6">
+                                </div>
+                                <div class="form-group">
+                                    <label>GLICOSE:</label>
+                                    <input type="text" class="lab-glicose" placeholder="Ex: 110.2">
+                                </div>
+                                <div class="form-group">
+                                    <label>UREIA:</label>
+                                    <input type="text" class="lab-ureia" placeholder="Ex: 21.8">
+                                </div>
+                                <div class="form-group">
+                                    <label>CREAT:</label>
+                                    <input type="text" class="lab-creat" placeholder="Ex: 0.77">
+                                </div>
+                                <div class="form-group">
+                                    <label>ÁC. ÚRICO:</label>
+                                    <input type="text" class="lab-au" placeholder="Ex: 4.9">
+                                </div>
+                            </div>
+
+                            <!-- Função Hepática -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>TGO:</label>
+                                    <input type="text" class="lab-tgo" placeholder="Ex: 30.2">
+                                </div>
+                                <div class="form-group">
+                                    <label>TGP:</label>
+                                    <input type="text" class="lab-tgp" placeholder="Ex: 34.9">
+                                </div>
+                                <div class="form-group">
+                                    <label>BT:</label>
+                                    <input type="text" class="lab-bt" placeholder="Ex: 0.25">
+                                </div>
+                                <div class="form-group">
+                                    <label>LDH:</label>
+                                    <input type="text" class="lab-ldh" placeholder="Ex: 842.6">
+                                </div>
+                            </div>
+
+                            <!-- Proteinúria -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>PROT. URINA:</label>
+                                    <input type="text" class="lab-prot-ur" placeholder="Ex: 2.7">
+                                </div>
+                                <div class="form-group">
+                                    <label>CREAT. URINA:</label>
+                                    <input type="text" class="lab-creat-ur" placeholder="Ex: 61.9">
+                                </div>
+                                <div class="form-group">
+                                    <label>REL. P/C:</label>
+                                    <input type="text" class="lab-rel-pc" placeholder="Ex: 0.004">
+                                </div>
+                            </div>
+
+                            <!-- Sorologias -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>VDRL:</label>
+                                    <select class="lab-vdrl form-select">
+                                        <option value="">Selecione</option>
+                                        <option value="NR">NR</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>HBsAg:</label>
+                                    <select class="lab-hbsag form-select">
+                                        <option value="">Selecione</option>
+                                        <option value="NR">NR</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Anti-HCV:</label>
+                                    <select class="lab-hcv form-select">
+                                        <option value="">Selecione</option>
+                                        <option value="NR">NR</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- EAS -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>EAS:</label>
+                                    <select class="lab-eas-status form-select">
+                                        <option value="">Selecione</option>
+                                        <option value="NORMAL">NORMAL</option>
+                                        <option value="ALTERADO">ALTERADO</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hemácias:</label>
+                                    <input type="text" class="lab-eas-hemacias" placeholder="Ex: 3">
+                                </div>
+                                <div class="form-group">
+                                    <label>Leucócitos:</label>
+                                    <input type="text" class="lab-eas-leucocitos" placeholder="Ex: 20">
+                                </div>
+                                <div class="form-group" style="flex-grow: 2;">
+                                    <label>Observações EAS:</label>
+                                    <input type="text" class="lab-eas-obs" placeholder="Ex: VÁRIAS CÉLULAS EPITELIAIS / FLORA BACTERIANA MODERADAMENTE AUMENTADA">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="geradores.adicionarExameLab()" class="btn-secondary">+ Adicionar Exame</button>
+                    <button type="button" onclick="geradores.removerUltimoExameLab()" class="btn-secondary">- Remover Último</button>
+
+                    <!-- USG Obstétrico -->
+                    <div class="form-section">
+                        <h3>Exames de Imagem</h3>
+                        <div id="examesImagem">
+                            <div class="exame-usg-grupo" data-index="0">
+                                <div class="form-row">
+                    <div class="form-group">
+                                        <label>Data:</label>
+                                        <input type="date" class="usg-data">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tipo:</label>
+                                        <select class="usg-tipo form-select">
+                                            <option value="USG OBSTÉTRICO">USG OBSTÉTRICO</option>
+                                            <option value="USG OBSTÉTRICA/DOPPLER">USG OBSTÉTRICA/DOPPLER</option>
+                                        </select>
+                                    </div>
+                    </div>
+
+                                <!-- Dados Básicos -->
+                                <div class="form-row">
+                    <div class="form-group">
+                                        <label>Apresentação:</label>
+                                        <select class="usg-apresentacao form-select">
+                                            <option value="FU">FU</option>
+                                            <option value="FT">FT</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Situação:</label>
+                                        <select class="usg-situacao form-select">
+                                            <option value="LONG">LONG</option>
+                                            <option value="OBLIQ">OBLIQ</option>
+                                            <option value="TRANSV">TRANSV</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Posição:</label>
+                                        <select class="usg-posicao form-select">
+                                            <option value="CEF">CEF</option>
+                                            <option value="PÉLVICO">PÉLVICO</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dorso:</label>
+                                        <select class="usg-dorso form-select">
+                                            <option value="À ESQUERDA">À ESQUERDA</option>
+                                            <option value="À DIREITA">À DIREITA</option>
+                                            <option value="ANTERIOR">ANTERIOR</option>
+                                            <option value="POSTERIOR">POSTERIOR</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Dados Fetais -->
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>BCF:</label>
+                                        <input type="text" class="usg-bcf" placeholder="Ex: 136">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sexo:</label>
+                                        <select class="usg-sexo form-select">
+                                            <option value="">Não visualizado</option>
+                                            <option value="FEMININO">FEMININO</option>
+                                            <option value="MASCULINO">MASCULINO</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Movimentação:</label>
+                                        <select class="usg-movimentacao form-select">
+                                            <option value="">Não avaliada</option>
+                                            <option value="MF+">MF+</option>
+                                            <option value="MF++">MF++</option>
+                                            <option value="MF+++">MF+++</option>
+                                            <option value="MF REDUZIDA">MF REDUZIDA</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Biometria -->
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>IG:</label>
+                                        <div class="form-row">
+                                            <input type="number" class="usg-ig-semanas" placeholder="Semanas" min="0" max="42" style="width: 80px;">
+                                            <input type="number" class="usg-ig-dias" placeholder="Dias" min="0" max="6" style="width: 60px;">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Peso Fetal (g):</label>
+                                        <input type="number" class="usg-peso" placeholder="Ex: 2220">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Percentil:</label>
+                                        <input type="text" class="usg-percentil" readonly>
+                                    </div>
+                                </div>
+
+                                <!-- Líquido e Placenta -->
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>ILA:</label>
+                                        <input type="text" class="usg-ila" placeholder="Ex: 11.9">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Localização Placenta:</label>
+                                        <select class="usg-placenta-local form-select">
+                                            <option value="ANTERIOR">ANTERIOR</option>
+                                            <option value="POSTERIOR">POSTERIOR</option>
+                                            <option value="CORPORAL">CORPORAL</option>
+                                            <option value="FÚNDICA">FÚNDICA</option>
+                                            <option value="LATERAL DIREITA">LATERAL DIREITA</option>
+                                            <option value="LATERAL ESQUERDA">LATERAL ESQUERDA</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Grau Placenta:</label>
+                                        <select class="usg-placenta-grau form-select">
+                                            <option value="GRAU 0">GRAU 0</option>
+                                            <option value="GRAU I">GRAU I</option>
+                                            <option value="GRAU II">GRAU II</option>
+                                            <option value="GRAU III">GRAU III</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Doppler -->
+                                <div class="doppler-section" style="display: none;">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>IR Artéria Umbilical:</label>
+                                            <input type="text" class="usg-ir-umbilical" placeholder="Ex: 0.65">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>IR Artéria Cerebral Média:</label>
+                                            <input type="text" class="usg-ir-cerebral" placeholder="Ex: 0.83">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>IP Médio das AAUU:</label>
+                                            <input type="text" class="usg-ip-medio" placeholder="Ex: 0.82">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Percentil IP:</label>
+                                            <input type="text" class="usg-ip-percentil" placeholder="Ex: 72">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Relação Cérebro Placentária:</label>
+                                            <input type="text" class="usg-relacao-cp" placeholder="Ex: 1.59">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Percentil RCP:</label>
+                                            <input type="text" class="usg-rcp-percentil" placeholder="Ex: 13">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Conclusão -->
+                                <div class="form-group">
+                                    <label>Conclusão/Observações:</label>
+                                    <textarea class="usg-conclusao" rows="2" placeholder="Ex: RCIU, MALFORMAÇÃO DO SNC, etc"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="geradores.adicionarExameUSG()" class="btn-secondary">+ Adicionar USG</button>
+                        <button type="button" onclick="geradores.removerUltimoExameUSG()" class="btn-secondary">- Remover Último</button>
+                    </div>
+                </div>
+
+                <!-- 12. Condutas -->
+                <div class="form-section">
+                    <h3>Conduta</h3>
+                <div class="form-group">
+                        <label for="conduta">Condutas Discutidas em Visita:</label>
+                        <textarea id="conduta" rows="4" placeholder="Descreva a conduta"></textarea>
+                </div>
+                </div>
+
+                <div class="form-actions">
+                    <button onclick="geradores.gerarEvolucao()" class="btn-primary">Gerar Evolução</button>
+                    <button onclick="geradores.copiarEvolucao()" class="btn-secondary">Copiar para Área de Transferência</button>
+                </div>
+
+                <div id="evolucaoGerada" class="resultado-evolucao"></div>
+            </div>
+        </section>
+
+        <section id="protocolos">
+            <h2>Protocolos MEAC</h2>
+            
+            <!-- Barra de Busca -->
+            <div class="search-container">
+                <input type="text" id="protocoloSearch" placeholder="Buscar protocolo..." class="search-input">
+            </div>
+
+            <!-- Filtros de Categoria -->
+            <div class="categoria-filtros">
+                <button class="filtro-btn active" data-categoria="todos">Todos</button>
+                <button class="filtro-btn" data-categoria="emergencia">Emergências</button>
+                <button class="filtro-btn" data-categoria="pre-natal">Pré-Natal</button>
+                <button class="filtro-btn" data-categoria="parto">Parto</button>
+                <button class="filtro-btn" data-categoria="complicacoes">Complicações</button>
+                <button class="filtro-btn" data-categoria="infeccoes">Infecções</button>
+                <button class="filtro-btn" data-categoria="ultrassom">Ultrassom</button>
+                <button class="filtro-btn" data-categoria="monitorizacao">Monitorização</button>
+            </div>
+
+            <!-- Lista de Protocolos -->
+            <div class="protocolos-container">
+                <!-- Emergências -->
+                <div class="protocolo-grupo" data-categoria="emergencia">
+                    <h3>Protocolos de Emergência</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('eclampsia')">
+                        <h4>Eclâmpsia</h4>
+                        <span class="protocolo-desc">Manejo de paciente com eclâmpsia</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('hemorragia')">
+                        <h4>Hemorragia Pós-Parto</h4>
+                        <span class="protocolo-desc">Conduta em hemorragia pós-parto</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('sepse-obstetrica')">
+                        <h4>Sepse Obstétrica</h4>
+                        <span class="protocolo-desc">Identificação e manejo da sepse</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('prolapso-cordao')">
+                        <h4>Prolapso de Cordão</h4>
+                        <span class="protocolo-desc">Manejo emergencial do prolapso</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('dpp')">
+                        <h4>Descolamento Prematuro de Placenta</h4>
+                        <span class="protocolo-desc">Manejo do DPP</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('hemorragia-primeira-metade')">
+                        <h4>Hemorragia da Primeira Metade</h4>
+                        <span class="protocolo-desc">Manejo das hemorragias até 20 semanas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('hemorragia-segunda-metade')">
+                        <h4>Hemorragia da Segunda Metade</h4>
+                        <span class="protocolo-desc">Manejo das hemorragias após 20 semanas</span>
+                    </div>
+                </div>
+
+                <!-- Pré-Natal -->
+                <div class="protocolo-grupo" data-categoria="pre-natal">
+                    <h3>Protocolos de Pré-Natal</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('diabetes-gestacional')">
+                        <h4>Diabetes Gestacional</h4>
+                        <span class="protocolo-desc">Manejo do diabetes na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('diabetes-pre')">
+                        <h4>Diabetes Pré-Gestacional</h4>
+                        <span class="protocolo-desc">Manejo do diabetes prévio</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('hipertensao-cronica')">
+                        <h4>Hipertensão Crônica</h4>
+                        <span class="protocolo-desc">Manejo da hipertensão prévia</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('cardiopatia')">
+                        <h4>Cardiopatia na Gestação</h4>
+                        <span class="protocolo-desc">Manejo de gestantes cardiopatas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('falciforme')">
+                        <h4>Doença Falciforme</h4>
+                        <span class="protocolo-desc">Acompanhamento perinatal</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('tireoide')">
+                        <h4>Hipo/Hipertireoidismo</h4>
+                        <span class="protocolo-desc">Manejo das doenças tireoidianas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('tromboprofilaxia')">
+                        <h4>Tromboprofilaxia</h4>
+                        <span class="protocolo-desc">Prevenção de TEV na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('gemelar')">
+                        <h4>Gestação Gemelar</h4>
+                        <span class="protocolo-desc">Manejo da gestação múltipla</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('gestacao-prolongada')">
+                        <h4>Gestação Prolongada</h4>
+                        <span class="protocolo-desc">Manejo após 41 semanas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('incompetencia-istmo')">
+                        <h4>Incompetência Istmo-Cervical</h4>
+                        <span class="protocolo-desc">Diagnóstico e tratamento</span>
+                    </div>
+                </div>
+
+                <!-- Parto -->
+                <div class="protocolo-grupo" data-categoria="parto">
+                    <h3>Protocolos de Parto</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('parto')">
+                        <h4>Assistência ao Parto</h4>
+                        <span class="protocolo-desc">Conduta no trabalho de parto</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('distocia-ombro')">
+                        <h4>Distocia de Ombro</h4>
+                        <span class="protocolo-desc">Manejo da distocia</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('distocicas')">
+                        <h4>Distócias</h4>
+                        <span class="protocolo-desc">Manejo das distócias</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('parto-operatorio')">
+                        <h4>Parto Vaginal Operatório</h4>
+                        <span class="protocolo-desc">Fórceps e vácuo-extrator</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('oasis')">
+                        <h4>OASIS</h4>
+                        <span class="protocolo-desc">Lesões obstétricas do esfíncter anal</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('trabalho-parto-prematuro')">
+                        <h4>Trabalho de Parto Prematuro</h4>
+                        <span class="protocolo-desc">Manejo do TPP</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('inducao-cesarea-anterior')">
+                        <h4>Indução com Cesárea Anterior</h4>
+                        <span class="protocolo-desc">Manejo da indução</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('inducao-trabalho-parto')">
+                        <h4>Indução do Trabalho de Parto</h4>
+                        <span class="protocolo-desc">Protocolos de indução</span>
+                    </div>
+                </div>
+
+                <!-- Complicações -->
+                <div class="protocolo-grupo" data-categoria="complicacoes">
+                    <h3>Complicações Obstétricas</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('abortamento')">
+                        <h4>Abortamento</h4>
+                        <span class="protocolo-desc">Manejo do abortamento</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('gestacao-ectopica')">
+                        <h4>Gestação Ectópica</h4>
+                        <span class="protocolo-desc">Diagnóstico e tratamento</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('dtg')">
+                        <h4>Doença Trofoblástica</h4>
+                        <span class="protocolo-desc">Manejo da DTG</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('placenta-acreta')">
+                        <h4>Placenta Acreta</h4>
+                        <span class="protocolo-desc">Manejo do espectro acreta</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('miocardiopatia')">
+                        <h4>Miocardiopatia Periparto</h4>
+                        <span class="protocolo-desc">Diagnóstico e tratamento</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('ramo')">
+                        <h4>RAMO</h4>
+                        <span class="protocolo-desc">Rotura anteparto de membranas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('sindromes-hipertensivas')">
+                        <h4>Síndromes Hipertensivas</h4>
+                        <span class="protocolo-desc">Manejo das síndromes hipertensivas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('restricao-crescimento')">
+                        <h4>Restrição de Crescimento</h4>
+                        <span class="protocolo-desc">Manejo da RCIU</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('obito-fetal')">
+                        <h4>Óbito Fetal</h4>
+                        <span class="protocolo-desc">Conduta no óbito fetal</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('insercao-baixa')">
+                        <h4>Inserção Baixa de Placenta</h4>
+                        <span class="protocolo-desc">Manejo da placenta prévia</span>
+                    </div>
+                </div>
+
+                <!-- Infecções -->
+                <div class="protocolo-grupo" data-categoria="infeccoes">
+                    <h3>Infecções</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('covid')">
+                        <h4>COVID-19</h4>
+                        <span class="protocolo-desc">Manejo na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('h1n1')">
+                        <h4>Influenza A (H1N1)</h4>
+                        <span class="protocolo-desc">Manejo na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('zika')">
+                        <h4>Zika Vírus</h4>
+                        <span class="protocolo-desc">Manejo na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('itu')">
+                        <h4>ITU</h4>
+                        <span class="protocolo-desc">Infecção do trato urinário</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('endometrite')">
+                        <h4>Endometrite Puerperal</h4>
+                        <span class="protocolo-desc">Diagnóstico e tratamento</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('hiv')">
+                        <h4>HIV</h4>
+                        <span class="protocolo-desc">Manejo na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('sifilis')">
+                        <h4>Sífilis</h4>
+                        <span class="protocolo-desc">Manejo na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('toxoplasmose')">
+                        <h4>Toxoplasmose</h4>
+                        <span class="protocolo-desc">Manejo na gestação</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('infeccao-puerperal')">
+                        <h4>Infecção Puerperal</h4>
+                        <span class="protocolo-desc">Manejo das infecções puerperais</span>
+                    </div>
+                </div>
+
+                <!-- Ultrassom -->
+                <div class="protocolo-grupo" data-categoria="ultrassom">
+                    <h3>Protocolos de Ultrassom</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('morfologico-primeiro')">
+                        <h4>Morfológico 1º Trimestre</h4>
+                        <span class="protocolo-desc">11-13+6 semanas</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('morfologico-segundo')">
+                        <h4>Morfológico 2º Trimestre</h4>
+                        <span class="protocolo-desc">20-24 semanas</span>
+                    </div>
+                </div>
+
+                <!-- Monitorização -->
+                <div class="protocolo-grupo" data-categoria="monitorizacao">
+                    <h3>Protocolos de Monitorização</h3>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('cardiotocografia')">
+                        <h4>Cardiotocografia</h4>
+                        <span class="protocolo-desc">Avaliação do bem-estar fetal</span>
+                    </div>
+                    <div class="protocolo-item" onclick="protocolos.mostrarProtocolo('partograma')">
+                        <h4>Partograma</h4>
+                        <span class="protocolo-desc">Monitorização do trabalho de parto</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal do Protocolo -->
+            <div id="protocoloModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="protocoloConteudo"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Prescrição -->
+        <div id="prescricao" class="tab-content">
+            <h2>Prescrição Ambulatorial</h2>
+            
+            <div class="form-group">
+                <label for="paciente-prescricao">Nome do Paciente:</label>
+                <input type="text" id="paciente-prescricao" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <h3>Medicações</h3>
+                
+                <!-- Padrões de Prescrição -->
+                <div class="padroes-prescricao">
+                    <h4>Padrões de Prescrição</h4>
+                    <div class="padroes-buttons">
+                        <button onclick="prescricao.aplicarPadrao('infeccao-urinaria')" class="btn-padrao">ITU</button>
+                        <button onclick="prescricao.aplicarPadrao('nauseas')" class="btn-padrao">Náuseas</button>
+                        <button onclick="prescricao.aplicarPadrao('anemia')" class="btn-padrao">Anemia</button>
+                        <button onclick="prescricao.aplicarPadrao('dor')" class="btn-padrao">Dor/Febre</button>
+                        <button onclick="prescricao.aplicarPadrao('corrimento')" class="btn-padrao">Corrimento</button>
+                        <button onclick="prescricao.aplicarPadrao('pre-natal')" class="btn-padrao">Rotina Pré-Natal</button>
+                        <button onclick="prescricao.aplicarPadrao('trabalho-parto')" class="btn-padrao">Inibição TP</button>
+                        <button onclick="prescricao.aplicarPadrao('hipertensao')" class="btn-padrao">Hipertensão</button>
+                        <button onclick="prescricao.aplicarPadrao('diabetes')" class="btn-padrao">Diabetes</button>
+                    </div>
+                </div>
+
+                <!-- Seletor de Medicações -->
+                <div class="medicacoes-rapidas">
+                    <h4>Adicionar Medicação</h4>
+                    <select id="medicacao-padrao" class="form-select">
+                        <optgroup label="Analgésicos/Antitérmicos">
+                            <option value="paracetamol">Paracetamol 500mg</option>
+                            <option value="paracetamol-750">Paracetamol 750mg</option>
+                            <option value="paracetamol-gotas">Paracetamol Gotas 200mg/mL</option>
+                            <option value="dipirona">Dipirona 500mg</option>
+                            <option value="dipirona-gotas">Dipirona Gotas 500mg/mL</option>
+                            <option value="dipirona-injetavel">Dipirona Injetável 1g/2mL</option>
+                            <option value="ibuprofeno">Ibuprofeno 600mg</option>
+                            <option value="ibuprofeno-gotas">Ibuprofeno Gotas 50mg/mL</option>
+                        </optgroup>
+                        <optgroup label="Antieméticos">
+                            <option value="metoclopramida">Metoclopramida 10mg</option>
+                            <option value="metoclopramida-gotas">Metoclopramida Gotas 4mg/mL</option>
+                            <option value="metoclopramida-injetavel">Metoclopramida Injetável 10mg/2mL</option>
+                            <option value="ondansetrona">Ondansetrona 4mg</option>
+                            <option value="ondansetrona-8">Ondansetrona 8mg</option>
+                            <option value="ondansetrona-injetavel">Ondansetrona Injetável 8mg/4mL</option>
+                            <option value="dimenidrinato">Dimenidrinato 50mg</option>
+                            <option value="dimenidrinato-b6">Dimenidrinato + Piridoxina 50mg + 10mg</option>
+                            <option value="dimenidrinato-b6-injetavel">Dimenidrinato + Piridoxina Injetável 50mg + 50mg/mL</option>
+                            <option value="meclin">Meclizina (Meclin) 25mg</option>
+                        </optgroup>
+                        <optgroup label="Antiespasmódicos">
+                            <option value="buscopan">Butilbrometo de Escopolamina (Buscopan) 10mg</option>
+                            <option value="buscopan-duo">Butilbrometo de Escopolamina + Dipirona (Buscopan Duo) 10mg + 250mg</option>
+                            <option value="buscopan-gotas">Butilbrometo de Escopolamina (Buscopan) Gotas 10mg/mL</option>
+                            <option value="buscopan-injetavel">Butilbrometo de Escopolamina (Buscopan) Injetável 20mg/mL</option>
+                            <option value="buscopan-duo-injetavel">Butilbrometo de Escopolamina + Dipirona (Buscopan Duo) Injetável 4mg + 500mg/mL</option>
+                        </optgroup>
+                        <optgroup label="Antibióticos">
+                            <option value="cefalexina">Cefalexina 500mg</option>
+                            <option value="cefalexina-suspensao">Cefalexina Suspensão 250mg/5mL</option>
+                            <option value="amoxicilina">Amoxicilina 500mg</option>
+                            <option value="amoxicilina-suspensao">Amoxicilina Suspensão 250mg/5mL</option>
+                            <option value="amoxicilina-clavulanato">Amoxicilina + Clavulanato 500mg + 125mg</option>
+                            <option value="amoxicilina-clavulanato-suspensao">Amoxicilina + Clavulanato Suspensão 250mg + 62,5mg/5mL</option>
+                            <option value="azitromicina">Azitromicina 500mg</option>
+                            <option value="azitromicina-suspensao">Azitromicina Suspensão 200mg/5mL</option>
+                            <option value="nitrofurantoina">Nitrofurantoína 100mg</option>
+                            <option value="ampicilina">Ampicilina 500mg</option>
+                            <option value="ceftriaxona">Ceftriaxona 1g Injetável</option>
+                        </optgroup>
+                        <optgroup label="Antifúngicos">
+                            <option value="miconazol-creme">Miconazol Creme Vaginal 2%</option>
+                            <option value="nistatina-creme">Nistatina Creme Vaginal 25.000 UI/g</option>
+                            <option value="clotrimazol-creme">Clotrimazol Creme Vaginal 1%</option>
+                            <option value="clotrimazol-comprimido">Clotrimazol Comprimido Vaginal 100mg</option>
+                            <option value="fluconazol">Fluconazol 150mg</option>
+                        </optgroup>
+                        <optgroup label="Suplementos">
+                            <option value="acido-folico">Ácido Fólico 5mg</option>
+                            <option value="sulfato-ferroso">Sulfato Ferroso 40mg Fe++</option>
+                            <option value="sulfato-ferroso-gotas">Sulfato Ferroso Gotas 25mg/mL Fe++</option>
+                            <option value="vitamina-d">Vitamina D 1.000 UI</option>
+                            <option value="vitamina-d-50000">Vitamina D 50.000 UI</option>
+                            <option value="calcio">Carbonato de Cálcio 500mg</option>
+                            <option value="calcio-d3">Carbonato de Cálcio + Vitamina D3 500mg + 400UI</option>
+                            <option value="magnesio">Cloreto de Magnésio 500mg</option>
+                        </optgroup>
+                        <optgroup label="Anti-hipertensivos">
+                            <option value="metildopa">Metildopa 250mg</option>
+                            <option value="metildopa-500">Metildopa 500mg</option>
+                            <option value="nifedipino">Nifedipino 10mg</option>
+                            <option value="nifedipino-20">Nifedipino 20mg</option>
+                            <option value="nifedipino-retard">Nifedipino Retard 20mg</option>
+                            <option value="hidralazina">Hidralazina 25mg</option>
+                            <option value="hidralazina-50">Hidralazina 50mg</option>
+                        </optgroup>
+                        <optgroup label="Antidiabéticos">
+                            <option value="metformina">Metformina 500mg</option>
+                            <option value="metformina-850">Metformina 850mg</option>
+                            <option value="insulina-nph">Insulina NPH 100UI/mL</option>
+                            <option value="insulina-regular">Insulina Regular 100UI/mL</option>
+                        </optgroup>
+                        <optgroup label="Corticoides">
+                            <option value="betametasona">Betametasona 12mg Injetável</option>
+                            <option value="dexametasona">Dexametasona 4mg Injetável</option>
+                            <option value="prednisona">Prednisona 20mg</option>
+                        </optgroup>
+                        <optgroup label="Tocolíticos">
+                            <option value="nifedipino-tocolise">Nifedipino 20mg (Tocolítico)</option>
+                            <option value="terbutalina">Terbutalina 0,5mg</option>
+                            <option value="terbutalina-injetavel">Terbutalina 0,5mg/mL Injetável</option>
+                        </optgroup>
+                        <optgroup label="Antidepressivos">
+                            <option value="sertralina">Sertralina 50mg</option>
+                            <option value="fluoxetina">Fluoxetina 20mg</option>
+                        </optgroup>
+                    </select>
+                    <button onclick="prescricao.adicionarMedicacaoPadrao()" class="btn-secondary">+ Adicionar Selecionada</button>
+                </div>
+
+                <div id="medicacoes-list">
+                    <!-- Template para cada medicação -->
+                    <div class="medicacao-item">
+                        <div class="medicacao-header">
+                            <input type="checkbox" class="med-checkbox">
+                            <select class="via-administracao">
+                                <option value="USO ORAL">USO ORAL</option>
+                                <option value="USO TÓPICO">USO TÓPICO</option>
+                                <option value="USO VAGINAL">USO VAGINAL</option>
+                                <option value="USO INTRAMUSCULAR">USO INTRAMUSCULAR (IM)</option>
+                                <option value="USO ENDOVENOSO">USO ENDOVENOSO (EV)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="medicacao-corpo">
+                            <input type="text" class="med-nome" placeholder="Nome do medicamento">
+                            <input type="text" class="med-concentracao" placeholder="Concentração (mg, g, ml)">
+                            <select class="med-apresentacao">
+                                <option value="comprimido">Comprimido</option>
+                                <option value="cápsula">Cápsula</option>
+                                <option value="ampola">Ampola</option>
+                                <option value="frasco">Frasco</option>
+                                <option value="tubo">Tubo</option>
+                            </select>
+                            <input type="number" class="med-quantidade" min="1" value="1">
+                            <select class="med-unidade">
+                                <option value="cx">Caixa(s)</option>
+                                <option value="cp">Comprimido(s)</option>
+                                <option value="amp">Ampola(s)</option>
+                                <option value="fr">Frasco(s)</option>
+                                <option value="tb">Tubo(s)</option>
+                            </select>
+                        </div>
+
+                        <div class="medicacao-instrucoes">
+                            <textarea class="med-instrucoes" rows="2" placeholder="Instruções de uso (Ex: Tomar 01 comprimido de 8/8h se dor ou febre)"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="prescricao.adicionarMedicacao()" class="btn-secondary">+ Adicionar Medicação em Branco</button>
+            </div>
+
+            <div class="form-group">
+                <label for="local-prescricao">Local:</label>
+                <input type="text" id="local-prescricao" class="form-control" value="Fortaleza - CE">
+            </div>
+
+            <div class="form-group">
+                <label for="data-prescricao">Data:</label>
+                <input type="date" id="data-prescricao" class="form-control">
+            </div>
+
+            <div class="form-actions">
+                <button onclick="prescricao.gerarPrescricao()" class="btn-primary">Gerar Prescrição</button>
+                <button onclick="prescricao.visualizarPrescricao()" class="btn-secondary">Visualizar</button>
+            </div>
+
+            <div id="prescricaoPreview" class="prescricao-preview"></div>
+        </div>
+
+        <section id="receituario">
+            <h2>Receituário</h2>
+            <!-- Formulário de receituário será adicionado aqui -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ObsTools - Desenvolvido por Cleuton Messias</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Inicializa o jsPDF
+        window.jsPDF = window.jspdf.jsPDF;
+    </script>
+</body>
+</html> 
